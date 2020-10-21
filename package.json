@@ -1,0 +1,19 @@
+{
+  "name": "king-electron",
+  "version": "0.1.0",
+  "description": "e-commerce automation",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "author": "Falk0r",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^10.1.3"
+  },
+  "dependencies": {
+    "@woocommerce/woocommerce-rest-api": "^1.0.1",
+    "axios": "^0.20.0"
+  }
+}
