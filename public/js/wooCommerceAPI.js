@@ -3,7 +3,8 @@ const webview = document.querySelector('webview');
 const { ipcRenderer } = require('electron');
 const axios = require('axios');
 const remote = require('electron').remote;
-import {account} from '../../account';
+const account = require('./../../account');
+// import {account} from '../../account';
 const webOrder = {
     numOrder : '',
     numProduct : '',
@@ -30,7 +31,11 @@ const WooCommerce = new WooCommerceRestApi({
 
 //Identification de l'URL et appelle des différentes fonctions
 function whereAreWe() {
+    const browser = remote.getCurrentWindow();
+    console.log({browser});
+
     let place = webview.getURL();
+    console.log({place});
 
     if (place == account.url) {
         webview.send("login");

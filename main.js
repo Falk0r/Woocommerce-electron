@@ -8,7 +8,8 @@ function createWindow () {
         height: 600,
         webPreferences: {
             nodeIntegration: true,
-            webviewTag: true
+            webviewTag: true,
+            enableRemoteModule: true
         }
     });
 

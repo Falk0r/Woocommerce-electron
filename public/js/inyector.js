@@ -1,6 +1,7 @@
 // inyector.js// Get the ipcRenderer of electron
 const {ipcRenderer} = require('electron');
-import {account} from '../../account';
+// import {account} from '../../account';
+const account = require('./../../account');
 
 // Do something according to a request of your mainview
 ipcRenderer.on('login', function(){
