@@ -14,7 +14,7 @@ const webOrder = {
 };
 const mailValid = ['gmail', 'hotmail', 'msn', 'laposte', 'yahoo', 'outlook', 'sfr', 'live', 'numericable', 'free', 'orange', 'me', 'neuf', 'wanadoo', 'icloud'];
 
-const waiting = setInterval(getOrder, 12000)
+const waiting = setInterval(getOrder, 300000)
 
 // Setup:
 const WooCommerceRestApi = require("@woocommerce/woocommerce-rest-api").default;
@@ -32,7 +32,6 @@ const WooCommerce = new WooCommerceRestApi({
 //Identification de l'URL et appelle des différentes fonctions
 function whereAreWe() {
     const browser = remote.getCurrentWindow();
-    console.log({browser});
 
     let place = webview.getURL();
     console.log({place});
@@ -47,7 +46,7 @@ function whereAreWe() {
         addOrder();
     }
     if (place == account.urlWaiting) {
-        waiting;
+        let pleaseWaiting = waiting;
     }
     if (place == account.urlNoPass) {
         expired();
@@ -109,7 +108,8 @@ function getProduct(element) {
             spam();
           break;
         default:  webOrder.numProduct = produit;
-      };    
+      };
+      console.log({webOrder});
 }
 
 //Ajout de la commande
@@ -148,8 +148,14 @@ webview.addEventListener('ipc-message',function(event){
         toHold();
     }
     if (event.channel == 'expired') {
-        let id = event.args[0][0].id;
-        webview.loadURL(account.urlExtend + id);
+        console.log('commande expiré');
+        console.log({webOrder});
+        if (webOrder.numProduct == "2") {
+            let id = event.args[0][0].id;
+            webview.loadURL(account.urlExtend + id);
+        } else {
+            toHold();
+        }
     }
     if (event.channel == 'mail-sended') {
         let url = event.args[0][0].url;
@@ -183,6 +189,7 @@ function reload() {
 
 function completed() {
     let url = account.urlUpdate + webOrder.numOrder + "&status=completed";
+    console.log({url});
     axios.get(url)
         .then(function (response) {
             // handle success
